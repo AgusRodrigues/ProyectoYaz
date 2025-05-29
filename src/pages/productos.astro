@@ -1,0 +1,25 @@
+---
+import { productos } from '../data/productos'
+import { useState } from 'preact/hooks'
+import GaleriaInteractiva from '../components/GaleriaInteractiva'
+
+const categorias = [...new Set(productos.map(p => p.categoria))]
+const precios = productos.map(p => p.precio)
+const precioMin = Math.min(...precios)
+const precioMax = Math.max(...precios)
+---
+
+<h1 class="text-3xl font-bold mb-4">Todos los productos</h1>
+
+<!-- Aquí luego podemos agregar los filtros -->
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {productos.map(producto => (
+    <a href={`/producto/${producto.slug}`} class="block border rounded p-4 hover:shadow-lg transition">
+      <img src={producto.imagen} alt={producto.nombre} class="w-full h-48 object-cover mb-2 rounded" />
+      <h2 class="text-xl font-semibold">{producto.nombre}</h2>
+      <p class="text-sm text-gray-500">{producto.categoria}</p>
+      <p class="font-bold mt-1">${producto.precio}</p>
+    </a>
+  ))}
+</div>

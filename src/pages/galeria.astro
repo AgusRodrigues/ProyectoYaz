@@ -1,0 +1,40 @@
+---
+import { productos } from "../data/productos";
+---
+
+<html lang="es">
+  <head>
+<link rel="stylesheet" href="/styles/global.css" />
+
+    <title>Galería de Productos | Proyecto Yaz</title>
+  </head>
+  <body class="bg-white text-black font-sans">
+    <main class="max-w-6xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-bold mb-8 text-center">Galería de Productos</h1>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+      >
+        {
+          productos.map((producto) => (
+            <a
+              href={`/producto/${producto.slug}`}
+              class="block bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300"
+            >
+              <img
+                src={producto.imagen}
+                alt={producto.nombre}
+                class="w-full h-56 object-cover rounded-t-2xl"
+              />
+              <div class="p-4">
+                <h2 class="text-xl font-semibold mb-2">{producto.nombre}</h2>
+                <p class="text-pink-600 font-bold">${producto.precio}</p>
+                <p class="text-sm mt-1 text-gray-600">{producto.categoria}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </body>
+</html>
