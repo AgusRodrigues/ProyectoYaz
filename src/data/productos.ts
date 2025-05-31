@@ -11,7 +11,7 @@ export interface Producto {
 export const productos: Producto[] = [
   {
     id: "1",
-    nombre: "Taza con diseño floral",
+    nombre: "Taza floral",
     slug: "taza-floral",
     precio: 3000,
     categoria: "tazas",
@@ -29,7 +29,7 @@ export const productos: Producto[] = [
   },
   {
     id: "3",
-    nombre: "Taza con diseño floral",
+    nombre: "Taza floral",
     slug: "taza-floral",
     precio: 3000,
     categoria: "tazas",
@@ -46,7 +46,7 @@ export const productos: Producto[] = [
     imagen: "/images/remera2.jpg",
   },{
     id: "5",
-    nombre: "Taza con diseño floral",
+    nombre: "Taza floral",
     slug: "taza-floral",
     precio: 3000,
     categoria: "tazas",
@@ -64,7 +64,7 @@ export const productos: Producto[] = [
   },
   {
     id: "7",
-    nombre: "Taza con diseño floral",
+    nombre: "Taza floral",
     slug: "taza-floral",
     precio: 3000,
     categoria: "tazas",

@@ -1,26 +1,56 @@
 ---
 import { productos } from "../data/productos";
 import "../styles/global.css";
----
 
+const url = new URL(Astro.request.url);
+const categoria = url.searchParams.get("categoria");
+
+const productosFiltrados = categoria
+  ? productos.filter((producto) => producto.categoria === categoria)
+  : productos;
+
+const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
+---
 <html lang="es">
   <head>
-<link rel="stylesheet" href="/styles/global.css" />
-
-    <title>Galería de Productos | Proyecto Yaz</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <title>Galeria de Productos | Proyecto Yaz</title>
   </head>
   <body class="bg-white text-black font-sans">
     <main class="max-w-6xl mx-auto px-4 py-12">
-      <h1 class="text-4xl font-bold mb-8 text-center">Galería de Productos</h1>
+      <h1 class="text-4xl font-bold mb-8 text-center">Galeria de Productos</h1>
 
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
-      >
+      <!-- FILTRO DE CATEGORÍAS -->
+      <div class="flex flex-wrap justify-center gap-4 mb-10">
+        <a
+          href="/galeria"
+          class={`px-4 py-2 rounded-full border ${
+            !categoria ? 'bg-black text-white' : 'bg-white text-black border-gray-300'
+          } hover:bg-gray-100 transition`}
+        >
+          Todos
+        </a>
         {
-          productos.map((producto) => (
+          categoriasUnicas.map(cat => (
+            <a
+              href={`/galeria?categoria=${cat}`}
+              class={`px-4 py-2 rounded-full border ${
+                categoria === cat ? 'bg-black text-white' : 'bg-white text-black border-gray-300'
+              } hover:bg-gray-100 transition`}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- GRID DE PRODUCTOS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {
+          productosFiltrados.map((producto) => (
             <a
               href={`/producto/${producto.slug}`}
-              class="block bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300"
+              class="block bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 hover:scale-105 transform"
             >
               <img
                 src={producto.imagen}
