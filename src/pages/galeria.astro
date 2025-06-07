@@ -8,64 +8,57 @@ const categoria = url.searchParams.get("categoria");
 const productosFiltrados = categoria
   ? productos.filter((producto) => producto.categoria === categoria)
   : productos;
-
-const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
 ---
+
 <html lang="es">
   <head>
-    <link rel="stylesheet" href="/styles/global.css" />
-    <title>Galeria de Productos | Proyecto Yaz</title>
+    <title>Galería de Productos | Proyecto Yaz</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  <body class="bg-white text-black font-sans">
+  <body class="bg-charcoal-500 text-negroni-500 font-sans">
     <main class="max-w-6xl mx-auto px-4 py-12">
-      <h1 class="text-4xl font-bold mb-8 text-center">Galeria de Productos</h1>
-
-      <!-- FILTRO DE CATEGORÍAS -->
-      <div class="flex flex-wrap justify-center gap-4 mb-10">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold">Galería de Productos</h1>
         <a
-          href="/galeria"
-          class={`px-4 py-2 rounded-full border ${
-            !categoria ? 'bg-black text-white' : 'bg-white text-black border-gray-300'
-          } hover:bg-gray-100 transition`}
+          href="/"
+          class="text-sm bg-negroni-500 hover:bg-negroni-600 text-white px-4 py-2 rounded-xl shadow transition"
         >
-          Todos
+          ← Volver al inicio
         </a>
-        {
-          categoriasUnicas.map(cat => (
-            <a
-              href={`/galeria?categoria=${cat}`}
-              class={`px-4 py-2 rounded-full border ${
-                categoria === cat ? 'bg-black text-white' : 'bg-white text-black border-gray-300'
-              } hover:bg-gray-100 transition`}
-            >
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </a>
-          ))
-        }
       </div>
 
-      <!-- GRID DE PRODUCTOS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+      >
         {
           productosFiltrados.map((producto) => (
             <a
               href={`/producto/${producto.slug}`}
-              class="block bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 hover:scale-105 transform"
+              class="block bg-charcoal-500  hover:shadow-xl transition-shadow duration-300 hover:scale-[1.02]"
             >
               <img
                 src={producto.imagen}
                 alt={producto.nombre}
-                class="w-full h-56 object-cover rounded-t-2xl"
+                class="w-full h-56 object-cover rounded-t-md"
               />
               <div class="p-4">
                 <h2 class="text-xl font-semibold mb-2">{producto.nombre}</h2>
-                <p class="text-pink-600 font-bold">${producto.precio}</p>
-                <p class="text-sm mt-1 text-gray-600">{producto.categoria}</p>
+                <p class="text-negroni-500 font-bold">${producto.precio}</p>
+                <p class="text-sm mt-1 text-white">{producto.categoria}</p>
               </div>
             </a>
           ))
         }
       </div>
+
+      {
+        productosFiltrados.length === 0 && (
+          <p class="text-center text-gray-500 mt-8">
+            No hay productos en esta categoría.
+          </p>
+        )
+      }
     </main>
   </body>
 </html>

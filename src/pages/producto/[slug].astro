@@ -1,5 +1,12 @@
 ---
 import { productos } from '../../data/productos'
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  return productos.map((producto) => ({
+    params: { slug: producto.slug }
+  }));
+}
 
 const { slug } = Astro.params
 const producto = productos.find(p => p.slug === slug)
@@ -9,18 +16,32 @@ if (!producto) {
 }
 ---
 
-<article class="max-w-2xl mx-auto p-4">
-  <img src={producto.imagen} alt={producto.nombre} class="w-full h-64 object-cover mb-4 rounded" />
-  <h1 class="text-3xl font-bold mb-2">{producto.nombre}</h1>
-  <p class="text-gray-500 mb-2">{producto.categoria}</p>
-  <p class="text-lg font-semibold mb-4">${producto.precio}</p>
-  <p class="mb-6">{producto.descripcion}</p>
+<main class="max-w-6xl mx-auto p-8">
+  <div class="flex flex-col md:flex-row gap-8 items-start">
+    <img src={producto.imagen} alt={producto.nombre} class="w-full md:w-1/2 h-auto rounded-xl shadow" />
 
-  <a
-    href={`https://wa.me/5411123456789?text=Hola! Estoy interesado en ${producto.nombre}`}
-    target="_blank"
-    class="inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-  >
-    Consultar por WhatsApp
-  </a>
-</article>
+    <div class="md:w-1/2">
+      <h1 class="text-4xl font-bold mb-2">{producto.nombre}</h1>
+      <p class="text-gray-500 mb-2 text-sm">{producto.categoria}</p>
+      <p class="text-2xl font-semibold text-pink-600 mb-4">${producto.precio}</p>
+      <p class="mb-6 leading-relaxed">{producto.descripcion}</p>
+
+      <a
+        href={`https://wa.me/5411123456789?text=Hola! Estoy interesado en ${producto.nombre}`}
+        target="_blank"
+        class="inline-block bg-green-500 text-white px-6 py-2 rounded-xl hover:bg-green-600 transition mb-6"
+      >
+        Consultar por WhatsApp
+      </a>
+
+      <div class="flex flex-col sm:flex-row gap-4 mt-4">
+        <a href="/" class="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 text-center">
+          Volver al Inicio
+        </a>
+        <a href="/galeria" class="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 text-center">
+          Volver a la Galeria
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
